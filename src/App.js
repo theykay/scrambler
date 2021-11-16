@@ -1,24 +1,35 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import {Display, Container} from './components';
 
-function App() {
+const App = () => {
+  const [ sentence, setSentence ] = useState('');
+  const [ counter, setCounter ] = useState(1);
+
+  const fetchSentence = async () => {
+    const URL = `https://api.hatchways.io/assessment/sentences/${counter}`;
+    // const URL = `https://api.hatchways.io/assessment/sentences/1`;
+    const RESPONSE = await fetch(URL);
+    const DATA = await RESPONSE.json();
+    setSentence(DATA.data.sentence);
+  }
+
+  useEffect(() => {
+    fetchSentence();
+    console.log(sentence);
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Display
+        sentence={{sentence}}
+      />
+      <Container
+        sentence={{sentence}}
+        setCounter={{setCounter}}
+        counter={{counter}}
+      />
+    </>
   );
 }
 
