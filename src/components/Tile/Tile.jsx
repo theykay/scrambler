@@ -1,10 +1,10 @@
 import React from 'react';
 // import './Tile.css';
 
-const Tile = () => {
+const Tile = (props) => {
   return (
     <>
-      
+      <h3>{props.char}</h3>
     </>
   );
 };
